@@ -28,6 +28,34 @@
         the answers will be submitted automatically. A timer is shown here for your reference.
     </p>
 
+    <script>
+    // script for timer
+    var timeleft = 10 * 60;
+    function update_timer() {
+        timeleft -= 1;
+        if (timeleft <= 0) {
+            document.querySelector("form").submit();
+        }
+        document.querySelector("#timeleft").innerHTML = Math.floor(timeleft / 60) + ":" + timeleft % 60;
+    }
+    setInterval(update_timer, 1000);
+    </script>
+
+    <style>
+        #timer {
+            position: fixed;
+            right: 100px;
+            top: 100px;
+            width: 150px;
+            height: 50px;
+        }
+    </style>
+
+    <div id="timer">
+        Time left:
+        <b><span id="timeleft"></span></b>
+    </div>
+
     <form action="/quiz_submit" method="POST">
         <ol>
         {% for q in questions %}

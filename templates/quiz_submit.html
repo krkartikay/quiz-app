@@ -26,28 +26,59 @@
     <p>
         YOUR RESPONSES HAVE BEEN SUBMITTED. YOUR TOTAL SCORE WAS: {{score}}!
     </p>
-        <ol>
+    <ol>
         {% for q in questions %}
-            <li> <b> {{q[1]}} </b> </li>
-            <br>
-                <input disabled type="radio" name="q{{q[0]}}" value="A" id="rq{{q[0]}}A">
-                <i>A.</i> <label for="rq{{q[0]}}A"> {{q[2]}} </label>
-                {% if q[6] == 'A' %} <img src="/static/check.png" height="20" alt="Correct"> {% endif %}
-            <br>
-                <input disabled type="radio" name="q{{q[0]}}" value="B" id="rq{{q[0]}}B">
-                <i>B.</i> <label for="rq{{q[0]}}B"> {{q[3]}} </label>
-                {% if q[6] == 'B' %} <img src="/static/check.png" height="20" alt="Correct"> {% endif %}
-            <br>
-                <input disabled type="radio" name="q{{q[0]}}" value="C" id="rq{{q[0]}}C">
-                <i>C.</i> <label for="rq{{q[0]}}C"> {{q[4]}} </label>
-                {% if q[6] == 'C' %} <img src="/static/check.png" height="20" alt="Correct"> {% endif %}
-            <br>
-                <input disabled type="radio" name="q{{q[0]}}" value="D" id="rq{{q[0]}}D">
-                <i>D.</i> <label for="rq{{q[0]}}D"> {{q[5]}} </label>
-                {% if q[6] == 'D' %} <img src="/static/check.png" height="20" alt="Correct"> {% endif %}
-            <br><br><br>
+        <li> <b> {{q[1]}} </b> </li>
+        <br>
+        <input disabled type="radio" name="q{{q[0]}}" value="A" id="rq{{q[0]}}A">
+        <i>A.</i> <label for="rq{{q[0]}}A"> {{q[2]}} </label>
+        
+        {% if q[6] == 'A' %}
+            <img src="/static/check.png" height="20" alt="Correct">
+        {% elif answers['q%d' % q[0]] == 'A' %}
+            <img src="/static/wrong.jpg" height="20" alt="Wrong">
+        {% endif %}
+        
+        <br>
+        
+        <input disabled type="radio" name="q{{q[0]}}" value="B" id="rq{{q[0]}}B">
+        
+        <i>B.</i> <label for="rq{{q[0]}}B"> {{q[3]}} </label>
+        
+        {% if q[6] == 'B' %}
+            <img src="/static/check.png" height="20" alt="Correct">
+        {% elif answers['q%d' % q[0]] == 'B' %}
+            <img src="/static/wrong.jpg" height="20" alt="Wrong">
+        {% endif %}
+        
+        <br>
+        
+        <input disabled type="radio" name="q{{q[0]}}" value="C" id="rq{{q[0]}}C">
+        
+        <i>C.</i> <label for="rq{{q[0]}}C"> {{q[4]}} </label>
+        
+        {% if q[6] == 'C' %}
+            <img src="/static/check.png" height="20" alt="Correct">
+        {% elif answers['q%d' % q[0]] == 'C' %}
+            <img src="/static/wrong.jpg" height="20" alt="Wrong">
+        {% endif %}
+        
+        <br>
+        
+        <input disabled type="radio" name="q{{q[0]}}" value="D" id="rq{{q[0]}}D">
+        
+        <i>D.</i> <label for="rq{{q[0]}}D"> {{q[5]}} </label>
+        
+        {% if q[6] == 'D' %}
+            <img src="/static/check.png" height="20" alt="Correct">
+        {% elif answers['q%d' % q[0]] == 'D' %}
+            <img src="/static/wrong.jpg" height="20" alt="Wrong">
+        {% endif %}
+        
+        <br><br><br>
+        
         {% endfor %}
-        </ol>
+    </ol>
 </body>
 
 </html>

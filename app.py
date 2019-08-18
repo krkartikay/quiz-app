@@ -156,7 +156,7 @@ def quiz_submit():
 
     edit_db("INSERT INTO scores VALUES (?,?,?,?)", (newID, session['username'], score, time.time()))
 
-    return render_template("quiz_submit.html", questions=all_questions, score=score)
+    return render_template("quiz_submit.html", questions=all_questions, score=score, answers=request.form)
 
 
 @app.route("/admin_dashboard")
