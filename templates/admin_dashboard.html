@@ -66,6 +66,10 @@
             {% endfor %}
         
     </table>
+
+    {% if session['username'] %}
+    <a href="/logout">Log out</a>
+    {% endif %}
     
 </body>
 </html>
