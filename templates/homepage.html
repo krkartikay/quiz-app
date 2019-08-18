@@ -7,8 +7,24 @@
     <title>Quiz APP</title>
 </head>
 <body>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
     Welcome to quiz app! <br>
     <a href="/login">Login page</a> <br>
     <a href="/register">Register page</a> <br>
+
+    {% if session['username'] %}
+    <a href="/logout">Log out</a>
+    {% endif %}
+
 </body>
 </html>
