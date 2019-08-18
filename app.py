@@ -139,7 +139,23 @@ def admin_dashboard():
     if session['accesslevel'] != 1:
         flash("You are not admin!")
         return redirect("/")
-    return render_template("admin_dashboard.html")
+    all_questions = query_db("SELECT * FROM Questions")
+    return render_template("admin_dashboard.html", questions = all_questions)
 
+
+@app.route('/newquestion', methods=["POST"])
+def newquestion():
+    newID = query_db("SELECT MAX(QID)+1 FROM Questions", one=True)[0]
+    if not newID:
+        newID = 0
+    ques = request.form['ques']
+    optA = request.form['optA']
+    optB = request.form['optB']
+    optC = request.form['optC']
+    optD = request.form['optD']
+    answer = request.form['answer']
+    points = request.form['points']
+    edit_db("INSERT INTO Questions VALUES(?,?,?,?,?,?,?,?)",(newID,ques,optA,optB,optC,optD,answer,points))
+    return redirect("/admin_dashboard")
 
 app.run(debug=True)

@@ -1,1 +1,71 @@
-ADMIN
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css">
+</head>
+<body>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class=flashes>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
+    <h1>ADMIN DASHBOARD</h1>
+    <h2>Add Questions</h2>
+    <form action="/newquestion" method="POST">
+        Question Text:<br>
+        <textarea name="ques" cols="30" rows="10"></textarea><br>
+        Option A: <input type="text" name="optA"> <br>
+        Option B: <input type="text" name="optB"> <br>
+        Option C: <input type="text" name="optC"> <br>
+        Option D: <input type="text" name="optD"> <br>
+        Answer:
+        <input type="radio" name="answer" value="A" id="rA"> <label for="rA">A</label>
+        <input type="radio" name="answer" value="B" id="rB"> <label for="rB">B</label>
+        <input type="radio" name="answer" value="C" id="rC"> <label for="rC">C</label>
+        <input type="radio" name="answer" value="D" id="rD"> <label for="rD">D</label>
+        <br>
+        Points: <input type="number" name="points"> <br>
+        <input type="submit" value="Add New">
+    </form>
+
+    <h2>Question Bank</h2>
+
+    <table>
+        <tr>
+            <th>Q. ID</th>
+            <th>Question</th>
+            <th>Option A</th>
+            <th>Option B</th>
+            <th>Option C</th>
+            <th>Option D</th>
+            <th>Answer</th>
+            <th>Points</th>
+        </tr>
+
+            {% for q in questions %}
+            <tr>
+                <td> {{ q[0] }} </td>
+                <td> {{ q[1] }} </td>
+                <td> {{ q[2] }} </td>
+                <td> {{ q[3] }} </td>
+                <td> {{ q[4] }} </td>
+                <td> {{ q[5] }} </td>
+                <td> {{ q[6] }} </td>
+                <td> {{ q[7] }} </td>
+            </tr>
+            {% endfor %}
+        
+    </table>
+    
+</body>
+</html>
