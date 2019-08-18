@@ -130,7 +130,33 @@ def login_submit():
 @app.route("/quizpage")
 @authorize
 def quizpage():
-    return render_template("quizpage.html")
+    all_questions = query_db("SELECT * FROM Questions")
+    return render_template("quizpage.html", questions = all_questions)
+
+
+@app.route("/quiz_submit", methods=["POST"])
+@authorize
+def quiz_submit():
+    all_questions = query_db("SELECT * FROM Questions")
+    answers = {}
+    questions_by_id = {}
+    for q in all_questions:
+        answers[q[0]] = q[6]
+        questions_by_id[q[0]] = q
+    score = 0
+    for key in request.form:
+        q_id = int(key[1:])
+        if request.form[key] == answers[q_id]:
+            score += int(questions_by_id[q_id][7])
+
+
+    newID = query_db("SELECT MAX(AttemptID)+1 FROM Scores", one=True)[0]
+    if not newID:
+        newID = 0
+
+    edit_db("INSERT INTO scores VALUES (?,?,?,?)", (newID, session['username'], score, time.time()))
+
+    return render_template("quiz_submit.html", questions=all_questions, score=score)
 
 
 @app.route("/admin_dashboard")
@@ -144,7 +170,11 @@ def admin_dashboard():
 
 
 @app.route('/newquestion', methods=["POST"])
+@authorize
 def newquestion():
+    if session['accesslevel'] != 1:
+        flash("You are not admin!")
+        return redirect("/")
     newID = query_db("SELECT MAX(QID)+1 FROM Questions", one=True)[0]
     if not newID:
         newID = 0

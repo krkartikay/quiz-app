@@ -24,33 +24,30 @@
     <h1>QUIZ</h1>
 
     <p>
-        Instructions: You have to attempt the following questions in 5 minutes, after which
-        the answers will be submitted automatically. A timer is shown here for your reference.
+        YOUR RESPONSES HAVE BEEN SUBMITTED. YOUR TOTAL SCORE WAS: {{score}}!
     </p>
-
-    <form action="/quiz_submit" method="POST">
         <ol>
         {% for q in questions %}
             <li> <b> {{q[1]}} </b> </li>
             <br>
-                <input type="radio" name="q{{q[0]}}" value="A" id="rq{{q[0]}}A">
+                <input disabled type="radio" name="q{{q[0]}}" value="A" id="rq{{q[0]}}A">
                 <i>A.</i> <label for="rq{{q[0]}}A"> {{q[2]}} </label>
+                {% if q[6] == 'A' %} <img src="/static/check.png" height="20" alt="Correct"> {% endif %}
             <br>
-                <input type="radio" name="q{{q[0]}}" value="B" id="rq{{q[0]}}B">
+                <input disabled type="radio" name="q{{q[0]}}" value="B" id="rq{{q[0]}}B">
                 <i>B.</i> <label for="rq{{q[0]}}B"> {{q[3]}} </label>
+                {% if q[6] == 'B' %} <img src="/static/check.png" height="20" alt="Correct"> {% endif %}
             <br>
-                <input type="radio" name="q{{q[0]}}" value="C" id="rq{{q[0]}}C">
+                <input disabled type="radio" name="q{{q[0]}}" value="C" id="rq{{q[0]}}C">
                 <i>C.</i> <label for="rq{{q[0]}}C"> {{q[4]}} </label>
+                {% if q[6] == 'C' %} <img src="/static/check.png" height="20" alt="Correct"> {% endif %}
             <br>
-                <input type="radio" name="q{{q[0]}}" value="D" id="rq{{q[0]}}D">
+                <input disabled type="radio" name="q{{q[0]}}" value="D" id="rq{{q[0]}}D">
                 <i>D.</i> <label for="rq{{q[0]}}D"> {{q[5]}} </label>
+                {% if q[6] == 'D' %} <img src="/static/check.png" height="20" alt="Correct"> {% endif %}
             <br><br><br>
         {% endfor %}
         </ol>
-
-        <input type="submit" value="Submit Answers">
-    </form>
-
 </body>
 
 </html>
