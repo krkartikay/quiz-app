@@ -30,11 +30,14 @@
         {% for q in questions %}
         <li> <b> {{q[1]}} </b> </li>
         <br>
+
         <input disabled type="radio" name="q{{q[0]}}" value="A" id="rq{{q[0]}}A">
         <i>A.</i> <label for="rq{{q[0]}}A"> {{q[2]}} </label>
         
-        {% if q[6] == 'A' %}
-            <img src="/static/check.png" height="20" alt="Correct">
+        {% if q[6] == 'A' and 'q%d' % q[0] in answers%}
+            <img src="/static/check.png" height="20" alt="Correct"> {{q[7]}} Points
+        {% elif q[6] == 'A' and 'q%d' % q[0] not in answers %}
+            <img src="/static/black_tick.jpg" height="20" alt="Unanswered Correct">
         {% elif answers['q%d' % q[0]] == 'A' %}
             <img src="/static/wrong.jpg" height="20" alt="Wrong">
         {% endif %}
@@ -45,8 +48,10 @@
         
         <i>B.</i> <label for="rq{{q[0]}}B"> {{q[3]}} </label>
         
-        {% if q[6] == 'B' %}
-            <img src="/static/check.png" height="20" alt="Correct">
+        {% if q[6] == 'B' and 'q%d' % q[0] in answers %}
+            <img src="/static/check.png" height="20" alt="Correct"> {{q[7]}} Points
+        {% elif q[6] == 'B' and 'q%d' % q[0] not in answers %}
+            <img src="/static/black_tick.jpg" height="20" alt="Unanswered Correct">
         {% elif answers['q%d' % q[0]] == 'B' %}
             <img src="/static/wrong.jpg" height="20" alt="Wrong">
         {% endif %}
@@ -57,8 +62,10 @@
         
         <i>C.</i> <label for="rq{{q[0]}}C"> {{q[4]}} </label>
         
-        {% if q[6] == 'C' %}
-            <img src="/static/check.png" height="20" alt="Correct">
+        {% if q[6] == 'C' and 'q%d' % q[0] in answers %}
+            <img src="/static/check.png" height="20" alt="Correct"> {{q[7]}} Points 
+        {% elif q[6] == 'C' and 'q%d' % q[0] not in answers %}
+            <img src="/static/black_tick.jpg" height="20" alt="Unanswered Correct">
         {% elif answers['q%d' % q[0]] == 'C' %}
             <img src="/static/wrong.jpg" height="20" alt="Wrong">
         {% endif %}
@@ -69,8 +76,10 @@
         
         <i>D.</i> <label for="rq{{q[0]}}D"> {{q[5]}} </label>
         
-        {% if q[6] == 'D' %}
-            <img src="/static/check.png" height="20" alt="Correct">
+        {% if q[6] == 'D' and 'q%d' % q[0] in answers %}
+            <img src="/static/check.png" height="20" alt="Correct"> {{q[7]}} Points
+        {% elif q[6] == 'D' and 'q%d' % q[0] not in answers %}
+            <img src="/static/black_tick.jpg" height="20" alt="Unattempted Correct">
         {% elif answers['q%d' % q[0]] == 'D' %}
             <img src="/static/wrong.jpg" height="20" alt="Wrong">
         {% endif %}
@@ -80,6 +89,22 @@
         {% endfor %}
     </ol>
 
+    <div id="legend">
+        <img src="/static/check.png" height="20" alt="Correct">  Correct Answer of Attempted Question<br><br>
+        <img src="/static/wrong.jpg" height="20" alt="Wrong">  Wrong Answer of Attempted Question<br><br>
+        <img src="/static/black_tick.jpg" height="20" alt="Unattempted Correct">  Correct Answer of Unattempted Question<br><br>
+    </div>
+
+    <style>
+        #legend {
+            position: fixed;
+            right: 100px;
+            top: 100px;
+            width: 350px;
+            height: 50px;
+        }
+    </style>
+    
     {% if session['username'] %}
     <a href="/logout">Log out</a>
     {% endif %}
