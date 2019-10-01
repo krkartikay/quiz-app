@@ -10,7 +10,9 @@ app.secret_key = "secret!"
 
 DATABASE = "db.sqlite"
 
-
+###################################################################################
+###################################################################################
+# Boilerplate for Authorization
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
@@ -72,6 +74,7 @@ def authorize(f):
 #############################################################################
 #############################################################################
 
+
 @app.route("/")
 def home():
     return render_template("homepage.html")
@@ -80,6 +83,7 @@ def home():
 @app.route("/login")
 def login():
     return render_template("login.html")
+
 
 @app.route("/logout")
 def logout():
@@ -110,6 +114,7 @@ def register_submit():
     flash("User created sucessfully!")
     return redirect("/")
 
+
 @app.route("/login_submit", methods=["POST"])
 def login_submit():
     username = request.form['username']
@@ -126,6 +131,7 @@ def login_submit():
     else:
         flash("Access Denied!")
         return redirect("/login")
+
 
 @app.route("/quizpage")
 @authorize
@@ -148,12 +154,9 @@ def quiz_submit():
         q_id = int(key[1:])
         if request.form[key] == answers[q_id]:
             score += int(questions_by_id[q_id][7])
-
-
     newID = query_db("SELECT MAX(AttemptID)+1 FROM Scores", one=True)[0]
     if not newID:
         newID = 0
-
     edit_db("INSERT INTO scores VALUES (?,?,?,?)", (newID, session['username'], score, time.time()))
 
     return render_template("quiz_submit.html", questions=all_questions, score=score, answers=request.form)
