@@ -1,3 +1,3 @@
-# quiz-app
+# Quiz-App
 
 DBMS Project 2019
